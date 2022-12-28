@@ -1,0 +1,27 @@
+{
+  "name": "module-12-challenge-sql",
+  "version": "1.0.0",
+  "description": "Mysql Nodejs CLI app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fbdthree/module-12-challenge-SQL.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "Mysql"
+  ],
+  "author": "Braden Dawson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fbdthree/module-12-challenge-SQL/issues"
+  },
+  "homepage": "https://github.com/fbdthree/module-12-challenge-SQL#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.3.3"
+  }
+}
