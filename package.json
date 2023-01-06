@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/fbdthree/module-12-challenge-SQL#readme",
   "dependencies": {
-    "inquirer": "^8.2.4",
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.5",
     "mysql2": "^2.3.3"
   }
 }
