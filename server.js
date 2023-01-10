@@ -1,9 +1,14 @@
+// Import `inquirer` module.
 const inquirer = require("inquirer")
+// Import `mysql2` module.
 const mysql = require("mysql2")
+// Import `console.table` module.
 const consoleTable = require('console.table');
 
+// Use the port number in the environment variable, or if environment variable is not defined, use port 3003.
 const PORT = process.env.PORT || 3003;
 
+// Create connection to `employee_db` database, and call `init()` to start displaying Inquirer prompts in the terminal.
 const db = mysql.createConnection(
     {
         host: 'localhost',
@@ -16,7 +21,8 @@ const db = mysql.createConnection(
     init()
 );
 
-
+// This function initializes the program.
+// Use Inquirer to ask questions.
 function init() {
     inquirer.prompt([
         {
@@ -34,6 +40,7 @@ function init() {
             message: "Please select one of the following options: ",
             name: "options"
         }]).then(response => {
+            // Use switch statement to handle answers.
             switch (response.options) {
                 case "View All Departments":
                     viewAllDepartments()
@@ -67,7 +74,7 @@ function init() {
         })
 }
 
-// I am presented with a formatted table showing department names and department ids
+// Will provide a formatted table showing department names and department ids
 function viewAllDepartments() {
     db.query("SELECT * FROM DEPARTMENT;", function (err, dbrecords) {
         if (err) console.log(err)
@@ -76,7 +83,7 @@ function viewAllDepartments() {
     })
 }
 
-// I am presented with the job title, role id, the department that role belongs to, and the salary for that role
+// Will provide a formatted table with the job title, role id, the department that role belongs to, and the salary for that role
 function viewAllRoles() {
     db.query("SELECT * FROM ROLES;", function (err, dbrecords) {
         if (err) console.log(err)
@@ -85,7 +92,7 @@ function viewAllRoles() {
     })
 }
 
-// I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
+// Will provide a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to.
 function viewAllEmployees() {
     db.query("SELECT * FROM EMPLOYEE", function (err, dbrecords) {
         if (err) console.log(err)
@@ -94,7 +101,7 @@ function viewAllEmployees() {
     })
 }
 
-// I am prompted to enter the name of the department and that department is added to the database
+// Add a new department to the database.
 function addDepartment() {
     inquirer.prompt([
         {
@@ -112,7 +119,7 @@ function addDepartment() {
     })
 }
 
-// addRole() - I am prompted to enter the name, salary, and department for the role and that role is added to the database//////////////////////////////
+// Add a new role to the database.  
 function addRole() {
     inquirer.prompt([
         {
@@ -127,24 +134,24 @@ function addRole() {
         },
         {
             type: "input",
-            message: "Please enter employee's department: ",
+            message: "Please enter employee's department ID: ",
             name: "department_id"
         }
     ]).then(response => {
         const title = response.title
         const salary = response.salary
         const department_id = response.department_id
-        db.query(INSERT INTO ROLES(title, salary, department_id) VALUES "${title}", ${ salary }, ${ department_id }), function (err, result) {
+        db.query(`INSERT INTO ROLES(title,salary,department_id) VALUES ("${title}",${salary},${department_id})`, function (err, result) {
             if (err) console.log(err)
-            console.log(`You have successfully entered the new employee informattion for ${first_name} ${last_name}.`)
+            console.log(`You have successfully entered the new employee informattion for ${title}.`)
             init();
         })
-})
-    }
+    })
+}
 
 
-// Create prompt to enter the employee’s first name, last name, role, and manager, and that employee to the database
-// TODO: verify the inputs ie if you enter a manager_id that is not already in the database it will crash.
+
+// Add a new employee to the database.
 function addEmployee() {
     inquirer.prompt([
         {
@@ -179,7 +186,7 @@ function addEmployee() {
         })
     })
 }
-// User is prompted to enter an employee     to update and their new role and this information is updated in the database 
+// User is prompted to enter an employee to update and their new role and this information is updated in the database. 
 function updateEmployeeRole() {
     inquirer.prompt([
         {
